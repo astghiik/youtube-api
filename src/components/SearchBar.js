@@ -10,7 +10,6 @@ function SearchBar(props) {
     }
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(34);
         props.handleFormSubmit(term);
     }
 
