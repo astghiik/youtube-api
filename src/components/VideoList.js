@@ -12,9 +12,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const VideoList = props => {
-    const { videos } = props;
+    const { videos, handleClickOpen } = props;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -35,7 +37,7 @@ const VideoList = props => {
             //     </Paper>
             // </Grid>
 
-            <TableCell key={v.id.videoId ? v.id.videoId : v.id.channelId} align="center">
+            <TableCell key={v.id.videoId ? v.id.videoId : v.id.channelId}  onClick={() => handleClickOpen(v)} align="center">
                 <VideoItem video={v}/>
                 {/* <Typography>{v.snippet.title}</Typography> */}
             </TableCell>
@@ -49,36 +51,36 @@ const VideoList = props => {
         //     </Grid>
         // </div>
         videos.length ? (
-        <Paper>
-            <div>
-                <Table
-                    aria-labelledby="tableTitle"
-                    aria-label="enhanced table"
-                >
-                    <TableBody>
-                        <TableRow>
-                            {videoItems}
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </div>
-            <TablePagination
-                component="div"
-                count={3}
-                labelRowsPerPage=""
-                rowsPerPageOptions={[]}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{
-                    'aria-label': 'previous page',
-                }}
-                nextIconButtonProps={{
-                    'aria-label': 'next page',
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-        </Paper>
+            <Paper>
+                <div>
+                    <Table
+                        aria-labelledby="tableTitle"
+                        aria-label="enhanced table"
+                    >
+                        <TableBody>
+                            <TableRow>
+                                {videoItems}
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
+                <TablePagination
+                    component="div"
+                    count={3}
+                    labelRowsPerPage=""
+                    rowsPerPageOptions={[]}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                        'aria-label': 'previous page',
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'next page',
+                    }}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
         ) : null
     )
 }

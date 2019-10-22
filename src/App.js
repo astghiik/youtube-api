@@ -3,11 +3,13 @@ import './App.css';
 import SearchBar from './components/SearchBar';
 import VideoList from './components/VideoList';
 import youtube from './apis/youtube';
+import SelectedVideo from './components/SelectedVideo';
 
 class App extends Component {
   state = {
     videos: [],
-    selectedVideo: null
+    selectedVideo: null,
+    openSelectedVideo: false
   }
 
   handleSubmit = async termFromSearchBar => {
@@ -30,11 +32,23 @@ class App extends Component {
     
   }
 
+  handleClickOpen = video => {
+    this.setState({
+      openSelectedVideo: true,
+      selectedVideo: video
+    });
+  };
+
+  handleClose = value => {
+    this.setState({ openSelectedVideo: false });
+  };
+
   render() {
     return (
       <div>
         <SearchBar handleFormSubmit={this.handleSubmit}/>
-        <VideoList videos={this.state.videos}/>
+        <VideoList videos={this.state.videos} handleClickOpen={this.handleClickOpen}/>
+        <SelectedVideo open={this.state.openSelectedVideo} video={this.state.selectedVideo} handleClose={this.handleClose}/>
       </div>
     )
   }
