@@ -7,10 +7,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
+import { connect } from 'react-redux';
+
 function VideoList(props) {
     const { videos, handleClickOpen } = props;
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(3);
+    const [rowsPerPage, setRowsPerPage] = useState(1);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -30,60 +32,72 @@ function VideoList(props) {
     }
         
 
-    const videoItems = videos.map(v => {
+    const cells = videos.map(v => {
         return (
-            // <Grid item xs key={v.id.videoId ? v.id.videoId : v.id.channelId}>
-            //     <Paper style={{height: "100%"}}>
-            //         <VideoItem video={v}/>
-            //         {v.snippet.title}
-            //     </Paper>
-            // </Grid>
-
             <TableCell key={v.id.videoId ? v.id.videoId : v.id.channelId} onClick={() => handleClickVideo(v)} align="center">
                 <VideoItem video={v}/>
             </TableCell>
         )
     });
+
+    const videoItems = [];
+    for (let i = 0; i < cells.length - 2; i += 3) {
+        videoItems.push(<TableRow>{[cells[i], cells[i + 1], cells[i + 2]]}</TableRow>);
+    }
     
     return (
-        // <div>
-        //     <Grid container justify="center" spacing={3}>
-        //         {videoItems}
-        //     </Grid>
-        // </div>
         videos.length ? (
             <Paper>
                 <div>
                     <Table
+                                // size={dense ? 'small' : 'medium'}
+
                         aria-labelledby="tableTitle"
                         aria-label="enhanced table"
                     >
-                        <TableBody>
-                            <TableRow>
-                                {videoItems}
-                            </TableRow>
+                        <TableBody> 
+                            {videoItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
                         </TableBody>
                     </Table>
                 </div>
                 <TablePagination
-                    component="div"
-                    count={3}
-                    labelRowsPerPage=""
+                    // component="div"
+                    // count={videos.length}
+                    // labelRowsPerPage="bla ba"
+                    // rowsPerPageOptions={[1, 5]}
+                    // rowsPerPage={rowsPerPage}
+                    // page={page}
+                    // backIconButtonProps={{
+                    //     'aria-label': 'previous page',
+                    // }}
+                    // nextIconButtonProps={{
+                    //     'aria-label': 'next page',
+                    // }}
+                    // onChangePage={handleChangePage}
+                    // onChangeRowsPerPage={handleChangeRowsPerPage}
                     rowsPerPageOptions={[]}
-                    rowsPerPage={rowsPerPage * 3}
-                    page={page}
-                    backIconButtonProps={{
-                        'aria-label': 'previous page',
-                    }}
-                    nextIconButtonProps={{
-                        'aria-label': 'next page',
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
+          component="div"
+          count={videos.length / 3}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'previous page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'next page',
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
         ) : null
     )
 }
 
-export default VideoList;
+function mapStateToProps(state) {
+    return {
+        videos: state.videos
+    }
+}
+
+export default connect(mapStateToProps)(VideoList);
