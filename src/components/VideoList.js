@@ -6,11 +6,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-
+import { selectVideo } from '../actions';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 function VideoList(props) {
-    const { videos, handleClickOpen } = props;
+    const { videos, selectVideo } = props;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(1);
 
@@ -25,7 +26,7 @@ function VideoList(props) {
 
     const handleClickVideo = video => {
         if (video.id.videoId) {
-            handleClickOpen(video);
+            selectVideo(video);
         } else {
             window.open(`https://www.youtube.com/channel/${video.id.channelId}`);
         }
@@ -50,8 +51,6 @@ function VideoList(props) {
             <Paper>
                 <div>
                     <Table
-                                // size={dense ? 'small' : 'medium'}
-
                         aria-labelledby="tableTitle"
                         aria-label="enhanced table"
                     >
@@ -60,34 +59,20 @@ function VideoList(props) {
                         </TableBody>
                     </Table>
                 </div>
-                <TablePagination
-                    // component="div"
-                    // count={videos.length}
-                    // labelRowsPerPage="bla ba"
-                    // rowsPerPageOptions={[1, 5]}
-                    // rowsPerPage={rowsPerPage}
-                    // page={page}
-                    // backIconButtonProps={{
-                    //     'aria-label': 'previous page',
-                    // }}
-                    // nextIconButtonProps={{
-                    //     'aria-label': 'next page',
-                    // }}
-                    // onChangePage={handleChangePage}
-                    // onChangeRowsPerPage={handleChangeRowsPerPage}
+                <TablePagination                    
                     rowsPerPageOptions={[]}
-          component="div"
-          count={videos.length / 3}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'previous page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page',
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+                    component="div"
+                    count={videos.length / 3}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                        'aria-label': 'previous page',
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'next page',
+                    }}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
         ) : null
@@ -100,4 +85,9 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(VideoList);
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({selectVideo}, dispatch);
+  }
+  
+
+export default connect(mapStateToProps, matchDispatchToProps)(VideoList);

@@ -1,17 +1,26 @@
-import youtube from '../apis/youtube';
-
-export const videosReducer = (state = {videos: []}, action) => {
+export const videos = (state = [], action) => {
     switch (action.type) {
         case "RECEIVE_VIDEOS":
-            
-                state = {...state, videos: action.payload};
-
-                return state;
-               
-
-            default:
+            return action.payload
+        default:
             return state;
-
     }
-    
+}
+
+export const selectedVideoReducer = (state = {openSelectedVideo: false}, action) => {
+    switch (action.type) {
+        case "SELECT_VIDEO":
+            return state = {
+                ...state,
+                selectedVideo: action.payload,
+                openSelectedVideo: true
+            };
+        case "CLOSE_VIDEO":
+            return state = {
+                ...state,
+                openSelectedVideo: false
+            }
+        default:
+            return state;
+    }
 }
