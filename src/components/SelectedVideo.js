@@ -2,7 +2,6 @@ import React from 'react';
 import { closeVideo } from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 
@@ -14,7 +13,7 @@ function SelectedVideo(props) {
   return (
     <Dialog maxWidth={false} onClose={closeVideo} aria-labelledby="simple-dialog-title" open={open}>
       <DialogContent>
-        <iframe src={videoSrc} width="800px" height="500px"></iframe>
+        <iframe title={video ? video.snippet.title : ""} src={videoSrc} width="800px" height="500px"></iframe>
       </DialogContent>
     </Dialog>
   );

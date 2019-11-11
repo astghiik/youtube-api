@@ -5,6 +5,13 @@ export const receiveVideos = videos => {
     }
 }
 
+export const videosToTriplets = videos => {
+    return {
+        type: 'TO_TRIPLETS',
+        payload: videos
+    }
+}
+
 export const selectVideo = video => {
     return {
         type: 'SELECT_VIDEO',

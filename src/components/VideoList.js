@@ -3,9 +3,9 @@ import VideoItem from './VideoItem';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import { selectVideo } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,18 +33,14 @@ function VideoList(props) {
     }
         
 
-    const cells = videos.map(v => {
+    const cells = videos.length ? videos[page].map(v => {
         return (
             <TableCell key={v.id.videoId ? v.id.videoId : v.id.channelId} onClick={() => handleClickVideo(v)} align="center">
                 <VideoItem video={v}/>
             </TableCell>
         )
-    });
+    }) : [];
 
-    const videoItems = [];
-    for (let i = 0; i < cells.length - 2; i += 3) {
-        videoItems.push(<TableRow>{[cells[i], cells[i + 1], cells[i + 2]]}</TableRow>);
-    }
     
     return (
         videos.length ? (
@@ -54,16 +50,18 @@ function VideoList(props) {
                         aria-labelledby="tableTitle"
                         aria-label="enhanced table"
                     >
-                        <TableBody> 
-                            {videoItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+                        <TableBody>
+                            <TableRow>
+                                {cells}
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </div>
                 <TablePagination                    
                     rowsPerPageOptions={[]}
                     component="div"
-                    count={videos.length / 3}
-                    rowsPerPage={rowsPerPage}
+                    count={videos.length}
+                    rowsPerPage={rowsPerPage + 2}
                     page={page}
                     backIconButtonProps={{
                         'aria-label': 'previous page',
