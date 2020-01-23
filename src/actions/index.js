@@ -1,3 +1,10 @@
+export const getSearchTerm = term => {
+    return {
+        type: 'TERM_FROM_SEARCHBAR',
+        payload: term
+    }
+}
+
 export const receiveVideos = videos => {
     return {
         type: 'RECEIVE_VIDEOS',

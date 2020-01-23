@@ -1,3 +1,12 @@
+export const searchbarReducer = (state = '', action) => {
+    switch (action.type) {
+        case "TERM_FROM_SEARCHBAR":
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export const videos = (state = [], action) => {
     switch (action.type) {
         case "RECEIVE_VIDEOS":   

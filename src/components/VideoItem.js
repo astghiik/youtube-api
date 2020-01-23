@@ -10,7 +10,16 @@ const VideoItem = props => {
             <img src={video.snippet.thumbnails.medium.url} alt="thumbnail" />
             <Typography>
                 {video.snippet.title}
-                {video.id.channelId ? <img src="https://image.flaticon.com/icons/png/512/49/49672.png" alt="channel logo" height="19" width="19" style={{marginLeft: "12px"}}/> : null }
+                {video.id.channelId ?
+                    <img 
+                        src="https://image.flaticon.com/icons/png/512/49/49672.png" 
+                        alt="channel logo"
+                        height="19"
+                        width="19"
+                        style={{marginLeft: "12px"}}
+                    />
+                    // <InfoIcon/>
+                     : null }
             </Typography>
         </div>
     )

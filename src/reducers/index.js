@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import { videos, selectedVideoReducer } from './videosReducer'
+import { videos, selectedVideoReducer, searchbarReducer } from './videosReducer'
 
 const allReducers = combineReducers({
     videos,
-    selectedVideoReducer
+    selectedVideoReducer,
+    termFromSearchbar: searchbarReducer
 })
 
 export default allReducers;
